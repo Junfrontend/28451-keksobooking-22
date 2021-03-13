@@ -95,6 +95,6 @@ let getTestData = function () {
     getTestData[i] = [author, offer, location];
     DataTestArray.push(getTestData[i]);
   }
-  console.log(DataTestArray);
+  return DataTestArray;
 }
 getTestData();
