@@ -84,7 +84,7 @@ let offer = {
   description: 'Обмурчательный вариант! Есть миска и лоток!',
   photos: getSomePhotos(),
 }
-let location = {
+let locationData = {
   x: randomNumberFromToWithFloat(35.65000, 35.70000, 5),
   y: randomNumberFromToWithFloat(139.70000, 139.80000, 5),
 }
@@ -92,7 +92,7 @@ let location = {
 let getTestData = function () {
   let DataTestArray = [];
   for (let i = 0; DataTestArray.length < 10; i++) {
-    getTestData[i] = [author, offer, location];
+    getTestData[i] = [author, offer, locationData];
     DataTestArray.push(getTestData[i]);
   }
   return DataTestArray;
