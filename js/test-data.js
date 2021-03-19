@@ -1,4 +1,4 @@
-import {randomIntNumberFromTo, randomNumberFromToWithFloat} from './util.js';
+import { randomIntNumberFromTo, randomNumberFromToWithFloat } from './util.js';
 
 let typeOfAccommodaion = ['palace', 'flat', 'house', 'bungalow'];
 let timeOfCheckinOut = ['12:00', '13:00', '14:00'];
@@ -51,7 +51,5 @@ let getTestData = function () {
   // eslint-disable-next-line no-console
   console.log('Работает!')
   return DataTestArray;
-  
-
 }
-export {getTestData};
+export { getTestData };
