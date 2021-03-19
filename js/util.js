@@ -1,8 +1,10 @@
 function randomIntNumberFromTo(min, max) {
   if (min === max) {
+    // eslint-disable-next-line no-console
     console.log('Введенный диапазон слишком узкий. Начальное число ' + min + ' равняется конечному числу диапазона ' + max);
   } else {
     if (min < 0 || max < 0) {
+      // eslint-disable-next-line no-console
       console.log('Введите диапазон положительных чисел');
     } else {
       if (min > max) {
@@ -10,6 +12,7 @@ function randomIntNumberFromTo(min, max) {
         boxForNumber = min;
         min = max;
         max = boxForNumber;
+        // eslint-disable-next-line no-console
         console.log('Числа введенного диапазона поменялись местами, так как начало диапазона больше конца! Это минимум: ' + min + ' Это максимум: ' + max)
       }
       min = Math.ceil(min);
@@ -24,9 +27,11 @@ function randomIntNumberFromTo(min, max) {
 
 function randomNumberFromToWithFloat(min, max, digitAfterComma) {
   if (min === max) {
+    // eslint-disable-next-line no-console
     console.log('Введенный диапазон слишком узкий. Начальное число ' + min + ' равняется конечному числу диапазона ' + max);
   } else {
     if (min < 0 || max < 0) {
+      // eslint-disable-next-line no-console
       console.log('Введите диапазон положительных чисел');
     } else {
       if (min > max) {
@@ -34,6 +39,7 @@ function randomNumberFromToWithFloat(min, max, digitAfterComma) {
         boxForNumber = min;
         min = max;
         max = boxForNumber;
+        // eslint-disable-next-line no-console
         console.log('Числа введенного диапазона поменялись местами, так как начало диапазона больше конца! Это минимум: ' + min + ' Это максимум: ' + max)
       }
 
@@ -43,4 +49,6 @@ function randomNumberFromToWithFloat(min, max, digitAfterComma) {
     }
   }
 }
-export {randomIntNumberFromTo, randomNumberFromToWithFloat};
+
+
+export { randomIntNumberFromTo, randomNumberFromToWithFloat };

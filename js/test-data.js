@@ -48,8 +48,10 @@ let getTestData = function () {
     };
     DataTestArray.push(getTestData[i]);
   }
-  
+  // eslint-disable-next-line no-console
+  console.log('Работает!')
   return DataTestArray;
+  
 
 }
 export {getTestData};
