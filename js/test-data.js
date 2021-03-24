@@ -23,7 +23,7 @@ let getSomePhotos = function () {
 
 let getTestData = function () {
   let DataTestArray = [];
-  for (let i = 0; DataTestArray.length < 2; i++) {
+  for (let i = 0; DataTestArray.length < 1; i++) {
     getTestData[i] = {
       author: {
         avatar: 'img/avatars/user0' + randomIntNumberFromTo(1, 8) + '.png',
