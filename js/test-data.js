@@ -23,14 +23,14 @@ let getSomePhotos = function () {
 
 let getTestData = function () {
   let DataTestArray = [];
-  for (let i = 0; DataTestArray.length < 10; i++) {
+  for (let i = 0; DataTestArray.length < 2; i++) {
     getTestData[i] = {
       author: {
-        avatar: 'img/avatars/user0' + randomIntNumberFromTo(1, 8) + 'png',
+        avatar: 'img/avatars/user0' + randomIntNumberFromTo(1, 8) + '.png',
       },
       offer: {
         title: 'Самые мурчательные варианты размещения - Кексобукинг',
-        address: 'X',
+        address: 'address',
         price: randomIntNumberFromTo(1000, 8000),
         type: typeOfAccommodaion[randomIntNumberFromTo(0, typeOfAccommodaion.length - 1)],
         rooms: randomIntNumberFromTo(1, 14),
@@ -48,8 +48,6 @@ let getTestData = function () {
     };
     DataTestArray.push(getTestData[i]);
   }
-  // eslint-disable-next-line no-console
-  console.log('Работает!')
   return DataTestArray;
 }
 export { getTestData };
