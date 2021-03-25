@@ -10,36 +10,49 @@ let getRandomArrayOfFeatures = function () {
   return featuresList;
 }
 
-let getSomePhotos = function () {
-  let photosList = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-    'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-    'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-  for (let i = 0; i <= randomIntNumberFromTo(0, photosList.length); i++) {
-    photosList.splice(photosList[i], 1)
-  }
-  return photosList;
-}
 
+
+
+let latX = randomNumberFromToWithFloat(34, 36, 5);
+let lngX = randomNumberFromToWithFloat(138, 140, 5);
+let coordinate = [latX, lngX]
 
 let getTestData = function () {
+
   let DataTestArray = [];
-  for (let i = 0; DataTestArray.length < 1; i++) {
+  for (let i = 0; DataTestArray.length < 5; i++) {
+
+    const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+      'http://o0.github.io/assets/images/tokyo/hotel2.jpg ',
+      'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+
+    const getRandomValue = function (min, max) {
+      return Math.round(Math.random() * (max - min) + min);
+    };
+
+    const getRandomItemNoRepeat = function (arr) {
+      let randomElement = getRandomValue(0, arr.length - 1);
+      let randomElementItem = arr[randomElement];
+      arr.splice(randomElement, 1);
+      return randomElementItem;
+    };
+
     getTestData[i] = {
       author: {
         avatar: 'img/avatars/user0' + randomIntNumberFromTo(1, 8) + '.png',
       },
       offer: {
         title: 'Самые мурчательные варианты размещения - Кексобукинг',
-        address: 'address',
+        address: coordinate,
         price: randomIntNumberFromTo(1000, 8000),
         type: typeOfAccommodaion[randomIntNumberFromTo(0, typeOfAccommodaion.length - 1)],
-        rooms: randomIntNumberFromTo(1, 14),
-        guests: randomIntNumberFromTo(1, 14),
+        rooms: randomIntNumberFromTo(1, 3),
+        guests: randomIntNumberFromTo(1, 4),
         checkin: timeOfCheckinOut[randomIntNumberFromTo(0, typeOfAccommodaion.length - 1)],
         checkout: timeOfCheckinOut[randomIntNumberFromTo(0, typeOfAccommodaion.length - 1)],
         features: getRandomArrayOfFeatures(),
         description: 'Обмурчательный вариант! Есть миска и лоток!',
-        photos: getSomePhotos(),
+        photos: getRandomItemNoRepeat(PHOTOS),
       },
       location: {
         x: randomNumberFromToWithFloat(35.65000, 35.70000, 5),
