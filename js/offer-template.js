@@ -19,8 +19,6 @@ let newOffer = function (testData) {
     let userAvatar = clonedNewOfferTemplate.querySelector('.popup__avatar');
     let mapCanvas = document.querySelector('.map__canvas');
 
-
-    
     userAvatar.src = testData[i].author.avatar;
     offerTitle.textContent = testData[i].offer.title;
     offerAddress.textContent = testData[i].offer.address;
@@ -43,16 +41,14 @@ let newOffer = function (testData) {
       + testData[i].offer.guests + ' гостей';
     offerCheckinAndCheckout.textContent = 'Время заезда с ' + testData[i].offer.checkin
       + ',' + ' выезд до ' + testData[i].offer.checkout;
+
+  
     offerFeatures.textContent = testData[i].offer.features;
+    offerFeatures.classList.add(testData[i].offer.features);
     offerDiscription.textContent = testData[i].offer.description;
     offerPhoto.src = testData[i].offer.photos;
     mapCanvas.append(clonedNewOfferTemplate);
-  
-    // eslint-disable-next-line no-console
-    console.log(offerTitle, offerAddress, offerPrice, offerType,
-      offerRoomsAndGuests, offerCheckinAndCheckout, offerFeatures,
-      offerDiscription, offerPhotos, userAvatar);
   }
+
 }
-// eslint-disable-next-line no-console
-export { newOffer };
+export { newOffer, newOfferTemplate };
