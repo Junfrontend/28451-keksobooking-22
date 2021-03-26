@@ -1,7 +1,6 @@
 /* global L:readonly */
 import { getTestData } from './test-data.js'
 import { randomIntNumberFromTo } from './util.js';
-// import { newOffer } from './offer-template.js';
 
 let disableAdForm = function () {
   let adForm = document.querySelector('.ad-form');
@@ -83,7 +82,7 @@ const marker = L.marker(
 marker.addTo(map);
 
 let address = document.querySelector('#address');
-
+address.value = marker._latlng.lat.toFixed(5) + ' ' + marker._latlng.lng.toFixed(5);
 
 marker.on('moveend', (evt) => {
   address.value = evt.target.getLatLng().lat.toFixed(5) + ' ' + evt.target.getLatLng().lng.toFixed(5) + '';
@@ -107,7 +106,6 @@ let newOffer = function (testData) {
     let offerPhotos = clonedNewOfferTemplate.querySelector('.popup__photos');
     let offerPhoto = offerPhotos.querySelector('.popup__photo');
     let userAvatar = clonedNewOfferTemplate.querySelector('.popup__avatar');
-    let mapCanvas = document.querySelector('.map__canvas');
 
     userAvatar.src = testData[i].author.avatar;
     offerTitle.textContent = testData[i].offer.title;
