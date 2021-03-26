@@ -73,5 +73,4 @@ roomCount.addEventListener('change', function () {
       guestsCount.options[2].setAttribute('disabled','disabled');
       break;
   }
-  
 });

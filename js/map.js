@@ -1,6 +1,6 @@
 /* global L:readonly */
 import { getTestData } from './test-data.js'
-import { randomNumberFromToWithFloat, randomIntNumberFromTo } from './util.js';
+import { randomIntNumberFromTo } from './util.js';
 // import { newOffer } from './offer-template.js';
 
 let disableAdForm = function () {
@@ -44,16 +44,12 @@ let disableMapFilters = function () {
 disableMapFilters();
 disableAdForm();
 
-
-
-
 const map = L.map('map-canvas')
   .on('load', () => {
 
     disableMapFilters();
     disableAdForm();
   })
-
   .setView([35.67, 139.76], 13);
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -67,6 +63,7 @@ const mainPinIcon = L.icon({
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
+
 const commonPin = L.icon({
   iconUrl: './img/pin.svg',
   iconSize: [52, 52],
@@ -92,28 +89,6 @@ marker.on('moveend', (evt) => {
   address.value = evt.target.getLatLng().lat.toFixed(5) + ' ' + evt.target.getLatLng().lng.toFixed(5) + '';
 });
 
-/*let testPoints = function (testData) {
-  
-  let arrayOfMarkers = [];
-  for (let i = 0; i < testData.length; i++) {
-    console.log(testData[i]);
-    arrayOfMarkers[i] = L.marker(
-      {
-        lat: testData[i].location.x,
-        lng: testData[i].location.y,
-      },
-      {
-        icon: commonPin,
-      },
-    );
-    //console.log(testData[i].offer.price + '');
-    arrayOfMarkers[i].addTo(map).bindPopup(newOfferTemplate);
-  }
-}
-
-
-
-testPoints(getTestData());*/
 let offerTemplate = document.querySelector('#card').content;
 
 let newOfferTemplate = offerTemplate.querySelector('.popup');
@@ -157,18 +132,15 @@ let newOffer = function (testData) {
     offerCheckinAndCheckout.textContent = 'Время заезда с ' + testData[i].offer.checkin
       + ',' + ' выезд до ' + testData[i].offer.checkout;
 
-
-    
     let randomFeatures = function (arr) {
       for (let j = 0; j < randomIntNumberFromTo(0, arr.length); j++) {
         arr[j].remove();
       }
     }
-    randomFeatures (offerFeatures);
+    randomFeatures(offerFeatures);
 
     offerDiscription.textContent = testData[i].offer.description;
     offerPhoto.src = testData[i].offer.photos;
-    mapCanvas.append(clonedNewOfferTemplate);
 
     let arrayOfMarkers = [];
     arrayOfMarkers[i] = L.marker(
@@ -181,9 +153,6 @@ let newOffer = function (testData) {
       },
     );
     arrayOfMarkers[i].addTo(map).bindPopup(clonedNewOfferTemplate);
-
-
-
   }
 }
 newOffer(getTestData());
