@@ -7,27 +7,19 @@ let changePrice = function () {
   switch (selectedType) {
     case 'Дворец':
       minPrice.placeholder = 10000;
-      if (minPrice.value === undefined) {
-        minPrice.value = minPrice.placeholder
-      }
+      minPrice.setAttribute('value', minPrice.placeholder);
       break;
     case 'Квартира':
       minPrice.placeholder = 1000;
-      if (minPrice.value === undefined) {
-        minPrice.value = minPrice.placeholder
-      }
+      minPrice.setAttribute('value', minPrice.placeholder);
       break;
     case 'Дом':
       minPrice.placeholder = 5000;
-      if (minPrice.value === undefined) {
-        minPrice.value = minPrice.placeholder
-      }
+      minPrice.setAttribute('value', minPrice.placeholder);
       break;
     case 'Бунгало':
       minPrice.placeholder = 0;
-      if (minPrice.value === undefined) {
-        minPrice.value = minPrice.placeholder
-      }
+      minPrice.setAttribute('value', minPrice.placeholder);
       break;
   }
 }
@@ -53,24 +45,25 @@ roomCount.addEventListener('change', function () {
   switch (roomCount.selectedIndex) {
     case 0:
       guestsCount.selectedIndex = 2;
-      guestsCount.options[0].setAttribute('disabled','disabled');
-      guestsCount.options[1].setAttribute('disabled','disabled');
-      guestsCount.options[3].setAttribute('disabled','disabled');
+      guestsCount.options[0].setAttribute('disabled', 'disabled');
+      guestsCount.options[1].setAttribute('disabled', 'disabled');
+      guestsCount.options[3].setAttribute('disabled', 'disabled');
       break;
     case 1:
       guestsCount.selectedIndex = 1;
-      guestsCount.options[0].setAttribute('disabled','disabled');
-      guestsCount.options[3].setAttribute('disabled','disabled');
+      guestsCount.options[0].setAttribute('disabled', 'disabled');
+      guestsCount.options[3].setAttribute('disabled', 'disabled');
       break;
     case 2:
       guestsCount.selectedIndex = 0;
-      guestsCount.options[3].setAttribute('disabled','disabled');
+      guestsCount.options[3].setAttribute('disabled', 'disabled');
       break;
     case 3:
       guestsCount.selectedIndex = 3;
-      guestsCount.options[0].setAttribute('disabled','disabled');
-      guestsCount.options[1].setAttribute('disabled','disabled');
-      guestsCount.options[2].setAttribute('disabled','disabled');
+      guestsCount.options[0].setAttribute('disabled', 'disabled');
+      guestsCount.options[1].setAttribute('disabled', 'disabled');
+      guestsCount.options[2].setAttribute('disabled', 'disabled');
       break;
   }
 });
+
