@@ -20,7 +20,7 @@ let coordinate = [latX, lngX]
 let getTestData = function () {
 
   let DataTestArray = [];
-  for (let i = 0; DataTestArray.length < 5; i++) {
+  for (let i = 0; DataTestArray.length < 10; i++) {
 
     const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
       'http://o0.github.io/assets/images/tokyo/hotel2.jpg ',
@@ -32,8 +32,8 @@ let getTestData = function () {
 
     const getRandomItemNoRepeat = function (arr) {
       let randomElement = getRandomValue(0, arr.length - 1);
-      let randomElementItem = arr[randomElement];
-      arr.splice(randomElement, 1);
+      let randomElementItem = [arr[randomElement]];
+      //arr.splice(randomElement, 1);
       return randomElementItem;
     };
 
@@ -55,8 +55,8 @@ let getTestData = function () {
         photos: getRandomItemNoRepeat(PHOTOS),
       },
       location: {
-        x: randomNumberFromToWithFloat(35.65000, 35.70000, 5),
-        y: randomNumberFromToWithFloat(139.70000, 139.80000, 5),
+        lat: randomNumberFromToWithFloat(35.65000, 35.70000, 5),
+        lng: randomNumberFromToWithFloat(139.70000, 139.80000, 5),
       },
     };
     DataTestArray.push(getTestData[i]);

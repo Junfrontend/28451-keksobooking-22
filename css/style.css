@@ -1027,3 +1027,19 @@ fieldset {
 .hidden {
   display: none;
 }
+.error-message {
+  width: 38%;
+  height: 3vw;
+  background-color: white;
+  border: 2px solid red;
+  position: fixed;
+  top: 600px;
+  border-radius: 10px;
+  left: 31%;
+  z-index: 1;
+}
+.error-message p {
+  font-size: 1vw;
+  text-align: center;
+  margin-top: 0.8vw;
+}
