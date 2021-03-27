@@ -1,3 +1,4 @@
+import {showAlert} from './util.js'
 let type = document.getElementById('type');
 
 let minPrice = document.getElementById('price');
@@ -67,3 +68,54 @@ roomCount.addEventListener('change', function () {
   }
 });
 
+let showSuccessMessage = function () {
+  let successMessageTemplate = document.getElementById('success').content;
+  let mainContent = document.querySelector('main');
+  mainContent.appendChild(successMessageTemplate);
+  let successMessage = document.querySelector('.success')
+  document.addEventListener('click', () => {
+    if (successMessage) {
+      successMessage.remove();
+    }
+    
+  })
+  document.addEventListener('keydown', (evt) => {
+    if(evt.keyCode === 27) {
+      successMessage.remove();
+    }
+  })
+}
+
+let clearForm = function () {
+  let address = document.querySelector('#address');
+  let offerTitle = document.querySelector('#title');
+  minPrice.value = ''
+  address.value = ''
+  offerTitle.value = ''
+}
+
+let adForm = document.querySelector('.ad-form');
+const sendAdForm = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    fetch(
+      'https://22.javascript.pages.academy/keksobooking ',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    ).then((response) => {
+      if (response.ok) {
+        onSuccess();
+        clearForm();
+      } else {
+        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+      }
+    })
+      .catch(() => {
+        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+      });
+  })
+}
+sendAdForm(showSuccessMessage);
