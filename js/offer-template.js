@@ -4,7 +4,7 @@ let offerTemplate = document.querySelector('#card').content;
 let newOfferTemplate = offerTemplate.querySelector('.popup');
 
 let newOffer = function (testData) {
-  for (let i = 0; i < testData.length; i++) {
+  for (let i = 0; i < 1; i++) {
     let clonedNewOfferTemplate = newOfferTemplate.cloneNode(true);
     let offerTitle = clonedNewOfferTemplate.querySelector('.popup__title');
     let offerAddress = clonedNewOfferTemplate.querySelector('.popup__text--address');

@@ -1,5 +1,6 @@
 /* global L:readonly */
-import { getTestData } from './test-data.js'
+
+import { getOfferData } from './fetch.js'
 import { randomIntNumberFromTo } from './util.js';
 
 let disableAdForm = function () {
@@ -143,8 +144,8 @@ let newOffer = function (testData) {
     let arrayOfMarkers = [];
     arrayOfMarkers[i] = L.marker(
       {
-        lat: testData[i].location.x,
-        lng: testData[i].location.y,
+        lat: testData[i].location.lat,
+        lng: testData[i].location.lng,
       },
       {
         icon: commonPin,
@@ -153,4 +154,8 @@ let newOffer = function (testData) {
     arrayOfMarkers[i].addTo(map).bindPopup(clonedNewOfferTemplate);
   }
 }
-newOffer(getTestData());
+//newOffer(getTestData());
+//console.log(getTestData());
+//newOffer(getData());
+export {newOffer}
+setTimeout(getOfferData, 1000)
