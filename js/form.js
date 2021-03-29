@@ -1,7 +1,11 @@
+import {sendData} from './api.js';
 import {showAlert} from './util.js'
+import {resetFilters} from './filter.js'
+import {resetMarkers, createFiltredPin} from './map.js'
 let type = document.getElementById('type');
-
+let resetButon = document.querySelector('.ad-form__reset');
 let minPrice = document.getElementById('price');
+
 
 let changePrice = function () {
   let selectedType = type.options[type.selectedIndex].text;
@@ -24,6 +28,7 @@ let changePrice = function () {
       break;
   }
 }
+let adForm = document.querySelector('.ad-form');
 
 type.onchange = changePrice;
 
@@ -77,45 +82,40 @@ let showSuccessMessage = function () {
     if (successMessage) {
       successMessage.remove();
     }
-    
+
   })
   document.addEventListener('keydown', (evt) => {
-    if(evt.keyCode === 27) {
+    if (evt.keyCode === 27) {
       successMessage.remove();
     }
   })
 }
 
-let clearForm = function () {
-  let address = document.querySelector('#address');
-  let offerTitle = document.querySelector('#title');
-  minPrice.value = ''
-  address.value = ''
-  offerTitle.value = ''
+
+let resetAll = function (cards) {
+  clearForm();
+  resetFilters();
+  resetMarkers();
+  createFiltredPin(cards);
 }
 
-let adForm = document.querySelector('.ad-form');
-const sendAdForm = (onSuccess) => {
-  adForm.addEventListener('submit', (evt) => {
+let clearForm = function (cards) {
+  resetButon.addEventListener('click', (evt) => {
     evt.preventDefault();
-    const formData = new FormData(evt.target);
-    fetch(
-      'https://22.javascript.pages.academy/keksobooking ',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    ).then((response) => {
-      if (response.ok) {
-        onSuccess();
-        clearForm();
-      } else {
-        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-      }
-    })
-      .catch(() => {
-        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-      });
+    resetAll(cards);
   })
 }
-sendAdForm(showSuccessMessage);
+let sendAdForm = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    new FormData(evt.target);
+    sendData(() => {
+      showSuccessMessage();
+      resetAll(onSuccess);
+    },
+    () => showAlert(),
+    new FormData(evt.target),
+    );
+  });
+};
+export {sendAdForm, clearForm}

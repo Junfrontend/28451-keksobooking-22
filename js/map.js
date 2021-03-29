@@ -1,7 +1,21 @@
 /* global L:readonly */
-import { getData } from './fetch.js'
 import { createCard } from './create-card.js'
-import { getFiltredcards } from './filter.js'
+import { getFiltredCards } from './filter.js'
+const LATITUDE_OF_CENTER_TOKYO = 35.67000;
+const LONGITUDE_OF_CENTER_TOKYO = 139.76000;
+
+const map = L.map('map-canvas')
+const commonPin = L.icon({
+  iconUrl: './img/pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+let addressField = document.querySelector('#address');
+
+let fillAddressField = function (x, y) {
+  addressField.value = x.toFixed(5) + ' ' + y.toFixed(5);
+}
 
 let disableAdForm = function () {
   let adForm = document.querySelector('.ad-form');
@@ -40,14 +54,6 @@ let disableMapFilters = function () {
   }
 }
 
-disableMapFilters();
-disableAdForm();
-
-const commonPin = L.icon({
-  iconUrl: './img/pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
 let arrOfPins = []; // Хранилище для пинов
 let renderingPin = function (filteredPin) { // Функция отрисовщик пинов на карте
   arrOfPins.forEach((marker) => {
@@ -67,44 +73,54 @@ let renderingPin = function (filteredPin) { // Функция отрисовщи
     arrOfPins.push(markers);
   })
 }
-const map = L.map('map-canvas')
-  .on('load', () => {
+
+let loadMap = function () {
+  map.on('load', () => {
     disableMapFilters();
     disableAdForm();
   })
-  .setView([35.67, 139.76], 13);
+    .setView([35.67, 139.76], 13);
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
-
-const createMainPin = function () {
-  const mainPinIcon = L.icon({
-    iconUrl: './img/main-pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 52],
-  });
-  const marker = L.marker(
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-      lat: 35.67,
-      lng: 139.76,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
-    {
-      icon: mainPinIcon,
-      draggable: true,
-    },
-  );
-  marker.addTo(map);
-
+  ).addTo(map);
 }
+fillAddressField(LATITUDE_OF_CENTER_TOKYO, LONGITUDE_OF_CENTER_TOKYO);
+const mainPinIcon = L.icon({
+  iconUrl: './img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+const marker = L.marker(
+  {
+    lat: LATITUDE_OF_CENTER_TOKYO,
+    lng: LONGITUDE_OF_CENTER_TOKYO,
+  },
+  {
+    icon: mainPinIcon,
+    draggable: true,
+  },
+);
+marker.addTo(map);
+marker.on('moveend', (evt) => {
+  fillAddressField(evt.target.getLatLng().lat.toFixed(5), evt.target.getLatLng().lng.toFixed(5));
+});
+
+const markers = L.layerGroup().addTo(map);
+const resetMarkers = () => {
+  markers.clearLayers();
+};
 
 let createFiltredPin = function (unfiltredCards) {
-  let unfiltredPin = getFiltredcards (unfiltredCards);
+
+  let unfiltredPin = getFiltredCards(unfiltredCards);
   renderingPin(unfiltredPin);
 }
-getData();
-createMainPin();
-export {  renderingPin, createFiltredPin }
+
+export {
+  renderingPin, createFiltredPin, resetMarkers, loadMap, disableMapFilters,
+  disableAdForm
+}

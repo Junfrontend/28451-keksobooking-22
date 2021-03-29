@@ -1,4 +1,3 @@
-
 const createPhotoArray = function (boxForPhoto, arrayOFPhotos) {
   boxForPhoto.innerHTML = ''
   const newPhotos = document.createDocumentFragment();
