@@ -1,36 +1,16 @@
-import {newOffer} from './map.js'
-let showErrorMessage = function () {
-  let errorMessage = document.querySelector('.error-message');
-  if (errorMessage.classList.contains('hidden')) {
-    errorMessage.classList.remove('hidden');
-  }
+import {showErrorMessage} from './util.js'
+import {createFiltredPin} from './map.js'
+const GETURL = 'https://22.javascript.pages.academy/keksobooking/data'
 
-}
 
-let testArr = []
-let getData = function () {
-  fetch('https://22.javascript.pages.academy/keksobooking/data')
+
+let getData = async function () {
+  fetch(GETURL)
     .then((response) => response.json())
-    .then((offerData) => {
-      // eslint-disable-next-line no-console
-      console.log('Начало цикла')
-      for (let i = 0; i < offerData.length; i++) {
-        // eslint-disable-next-line no-console
-        console.log('Идет цикл')
-        testArr.push(offerData[i])
-      }
-      // eslint-disable-next-line no-console
-      console.log(testArr)
-      // eslint-disable-next-line no-console
-      console.log('Конец цикла')
-    })
+    .then((cards) => createFiltredPin(cards))
     .catch(() => showErrorMessage())
 }
 
-setTimeout(getData, 500);
-let getOfferData = function () {
-  newOffer(testArr);
-}
+export { getData }
 
-export { getOfferData }
 

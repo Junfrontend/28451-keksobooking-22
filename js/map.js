@@ -1,7 +1,7 @@
 /* global L:readonly */
-
-import { getOfferData } from './fetch.js'
-import { randomIntNumberFromTo } from './util.js';
+import { getData } from './fetch.js'
+import { createCard } from './create-card.js'
+import { getFiltredcards } from './filter.js'
 
 let disableAdForm = function () {
   let adForm = document.querySelector('.ad-form');
@@ -20,7 +20,6 @@ let disableAdForm = function () {
     }
   }
 }
-
 
 let disableMapFilters = function () {
   let mapFilters = document.querySelector('.map__filters');
@@ -44,13 +43,37 @@ let disableMapFilters = function () {
 disableMapFilters();
 disableAdForm();
 
+const commonPin = L.icon({
+  iconUrl: './img/pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+let arrOfPins = []; // Хранилище для пинов
+let renderingPin = function (filteredPin) { // Функция отрисовщик пинов на карте
+  arrOfPins.forEach((marker) => {
+    map.removeLayer(marker);
+  })
+  filteredPin.forEach((card) => {
+    let markers = L.marker(
+      {
+        lat: card.location.lat,
+        lng: card.location.lng,
+      },
+      {
+        icon: commonPin,
+        keepInView: true,
+      });
+    markers.addTo(map).bindPopup(createCard(card));
+    arrOfPins.push(markers);
+  })
+}
 const map = L.map('map-canvas')
   .on('load', () => {
-
     disableMapFilters();
     disableAdForm();
   })
   .setView([35.67, 139.76], 13);
+
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
@@ -58,104 +81,30 @@ L.tileLayer(
   },
 ).addTo(map);
 
-const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
+const createMainPin = function () {
+  const mainPinIcon = L.icon({
+    iconUrl: './img/main-pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 52],
+  });
+  const marker = L.marker(
+    {
+      lat: 35.67,
+      lng: 139.76,
+    },
+    {
+      icon: mainPinIcon,
+      draggable: true,
+    },
+  );
+  marker.addTo(map);
 
-const commonPin = L.icon({
-  iconUrl: './img/pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
-
-const marker = L.marker(
-  {
-    lat: 35.67,
-    lng: 139.76,
-  },
-  {
-    icon: mainPinIcon,
-    draggable: true,
-  },
-);
-marker.addTo(map);
-
-let address = document.querySelector('#address');
-address.value = marker._latlng.lat.toFixed(5) + ' ' + marker._latlng.lng.toFixed(5);
-
-marker.on('moveend', (evt) => {
-  address.value = evt.target.getLatLng().lat.toFixed(5) + ' ' + evt.target.getLatLng().lng.toFixed(5) + '';
-});
-
-let offerTemplate = document.querySelector('#card').content;
-
-let newOfferTemplate = offerTemplate.querySelector('.popup');
-
-let newOffer = function (testData) {
-  for (let i = 0; i < testData.length; i++) {
-    let clonedNewOfferTemplate = newOfferTemplate.cloneNode(true);
-    let offerTitle = clonedNewOfferTemplate.querySelector('.popup__title');
-    let offerAddress = clonedNewOfferTemplate.querySelector('.popup__text--address');
-    let offerPrice = clonedNewOfferTemplate.querySelector('.popup__text--price');
-    let offerType = clonedNewOfferTemplate.querySelector('.popup__type');
-    let offerRoomsAndGuests = clonedNewOfferTemplate.querySelector('.popup__text--capacity');
-    let offerCheckinAndCheckout = clonedNewOfferTemplate.querySelector('.popup__text--time');
-    let offerFeatures = clonedNewOfferTemplate.querySelectorAll('.popup__feature');
-    let offerDiscription = clonedNewOfferTemplate.querySelector('.popup__description');
-    let offerPhotos = clonedNewOfferTemplate.querySelector('.popup__photos');
-    let offerPhoto = offerPhotos.querySelector('.popup__photo');
-    let userAvatar = clonedNewOfferTemplate.querySelector('.popup__avatar');
-
-    userAvatar.src = testData[i].author.avatar;
-    offerTitle.textContent = testData[i].offer.title;
-    offerAddress.textContent = testData[i].offer.address;
-    offerPrice.textContent = testData[i].offer.price + ' ₽/ночь';
-    switch (testData[i].offer.type) {
-      case 'palace':
-        offerType.textContent = 'Дворец';
-        break;
-      case 'flat':
-        offerType.textContent = 'Квартира';
-        break;
-      case 'house':
-        offerType.textContent = 'Дом';
-        break;
-      case 'bungalow':
-        offerType.textContent = 'Бунгало';
-        break;
-    }
-    offerRoomsAndGuests.textContent = 'Доступно ' + testData[i].offer.rooms + ' комнаты для '
-      + testData[i].offer.guests + ' гостей';
-    offerCheckinAndCheckout.textContent = 'Время заезда с ' + testData[i].offer.checkin
-      + ',' + ' выезд до ' + testData[i].offer.checkout;
-
-    let randomFeatures = function (arr) {
-      for (let j = 0; j < randomIntNumberFromTo(0, arr.length); j++) {
-        arr[j].remove();
-      }
-    }
-    randomFeatures(offerFeatures);
-
-    offerDiscription.textContent = testData[i].offer.description;
-    offerPhoto.src = testData[i].offer.photos;
-
-    let arrayOfMarkers = [];
-    arrayOfMarkers[i] = L.marker(
-      {
-        lat: testData[i].location.lat,
-        lng: testData[i].location.lng,
-      },
-      {
-        icon: commonPin,
-      },
-    );
-    arrayOfMarkers[i].addTo(map).bindPopup(clonedNewOfferTemplate);
-  }
 }
-//newOffer(getTestData());
-//console.log(getTestData());
-//newOffer(getData());
-export {newOffer}
-setTimeout(getOfferData, 1000)
+
+let createFiltredPin = function (unfiltredCards) {
+  let unfiltredPin = getFiltredcards (unfiltredCards);
+  renderingPin(unfiltredPin);
+}
+getData();
+createMainPin();
+export {  renderingPin, createFiltredPin }

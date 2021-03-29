@@ -68,5 +68,12 @@ const showAlert = (message) => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
 }
+let showErrorMessage = function () {
+  let errorMessage = document.querySelector('.error-message');
+  if (errorMessage.classList.contains('hidden')) {
+    errorMessage.classList.remove('hidden');
+  }
 
-export { randomIntNumberFromTo, randomNumberFromToWithFloat, showAlert };
+}
+
+export { randomIntNumberFromTo, randomNumberFromToWithFloat, showAlert, showErrorMessage  };
