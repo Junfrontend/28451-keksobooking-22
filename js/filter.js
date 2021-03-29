@@ -56,7 +56,6 @@ let priceFilter = function (cards) {
   })
 }
 
-
 let roomsFilter = function (cards) {
   let rooms = document.querySelector('.map__filter-rooms');
   rooms.addEventListener('change', (evt) => {
@@ -79,7 +78,6 @@ let roomsFilter = function (cards) {
     }
   })
 }
-
 
 let guestsFilter = function (cards) {
   let guests = document.querySelector('.map__filter-guests');
