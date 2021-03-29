@@ -14,8 +14,6 @@ const ONE_GUEST = 1;
 const TWO_GUESTS = 2;
 const NOT_FOR_GUESTS = 0;
 
-
-
 let pinsToRender = [];
 
 let typeFilter = function (cards, evt) {
