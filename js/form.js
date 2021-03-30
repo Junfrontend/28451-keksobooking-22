@@ -108,12 +108,11 @@ let clearForm = function (cards) {
 let sendAdForm = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    new FormData(evt.target);
     sendData(() => {
       showSuccessMessage();
       resetAll(onSuccess);
     },
-    () => showAlert(),
+    () => showAlert('Извините, ошибка связи с сервером. Наши коты уже чинят'),
     new FormData(evt.target),
     );
   });

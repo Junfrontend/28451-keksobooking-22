@@ -14,7 +14,7 @@ const commonPin = L.icon({
 let addressField = document.querySelector('#address');
 
 let fillAddressField = function (x, y) {
-  addressField.value = x.toFixed(5) + ' ' + y.toFixed(5);
+  addressField.value = x + ' ' + y;
 }
 
 let disableAdForm = function () {

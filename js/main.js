@@ -2,7 +2,7 @@ import {sendAdForm, clearForm} from'./form.js';
 import { loadMap, disableMapFilters, disableAdForm, createFiltredPin} from './map.js';
 import { applyFilters } from './filter.js';
 import { getData} from './api.js';
-import { debounce } from './util.js'
+import { debounce, showAlert } from './util.js'
 
 const DEBOUNCE_DELAY = 500;
 
@@ -13,6 +13,6 @@ getData((unfiltredCards) => {
   loadMap();
   createFiltredPin(unfiltredCards);
   applyFilters(debounce(() => createFiltredPin(unfiltredCards), DEBOUNCE_DELAY));
-  sendAdForm(unfiltredCards);
+  sendAdForm(unfiltredCards, showAlert);
   clearForm(unfiltredCards)
 });

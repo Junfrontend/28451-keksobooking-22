@@ -1,6 +1,6 @@
 import {showErrorMessage} from './util.js'
 const GETURL = 'https://22.javascript.pages.academy/keksobooking/data';
-const POSTURL = 'https://22.javascript.pages.academy/keksobooking/';
+const POSTURL = 'https://22.javascript.pages.academy/keksobooking';
 
 
 let getData = function (doThisOnSuccsess) {
@@ -10,11 +10,13 @@ let getData = function (doThisOnSuccsess) {
     .catch(() => showErrorMessage('Чтото пошло не так, коты ушли покушать и поспать. Потом вернутся. Наверое.'))
 }
 
-let sendData = function (doItOnSuccess, doItOnFail, contentType) {
-  fetch( POSTURL,
+let sendData = function (doItOnSuccess, doItOnFail) {
+  fetch(POSTURL,
     {
       method: 'POST',
-      contentType,
+      headers: {
+        'Content-Type': 'multipart/form-data;',
+      },
     },
   )
     .then((response) => {
