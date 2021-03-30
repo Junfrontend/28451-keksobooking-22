@@ -1,6 +1,6 @@
 /* global L:readonly */
 import { createCard } from './create-card.js'
-import { getFiltredCards } from './filter.js'
+import { getFilteredCards } from './filter.js'
 const LATITUDE_OF_CENTER_TOKYO = 35.67000;
 const LONGITUDE_OF_CENTER_TOKYO = 139.76000;
 
@@ -42,7 +42,7 @@ let disableMapFilters = function () {
     mapFilters.classList.remove('map__filters--disabled');
     let mapFiltersElements = mapFilters.querySelectorAll('select');
     for (let i = 0; i < mapFiltersElements.length; i++) {
-      mapFiltersElements[i].removeAttribute('disabled', 'disabled');
+      mapFiltersElements[i].removeAttribute('disabled');
     }
   } else {
     mapFilters.classList.add('map__filters--disabled');
@@ -119,7 +119,7 @@ let resetMap = function () {
 };
 
 let createFiltredPin = function (unfiltredCards) {
-  let unfiltredPin = getFiltredCards(unfiltredCards);
+  let unfiltredPin = getFilteredCards(unfiltredCards);
   renderingPin(unfiltredPin);
 }
 
