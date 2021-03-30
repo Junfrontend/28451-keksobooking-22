@@ -1,6 +1,6 @@
-import {showAlert} from './util.js'
+import { resetFilters } from './filter.js'
+import { resetMarkers, createFiltredPin, resetMap } from './map.js'
 let type = document.getElementById('type');
-
 let minPrice = document.getElementById('price');
 
 let changePrice = function () {
@@ -24,6 +24,7 @@ let changePrice = function () {
       break;
   }
 }
+
 
 type.onchange = changePrice;
 
@@ -68,54 +69,22 @@ roomCount.addEventListener('change', function () {
   }
 });
 
-let showSuccessMessage = function () {
-  let successMessageTemplate = document.getElementById('success').content;
-  let mainContent = document.querySelector('main');
-  mainContent.appendChild(successMessageTemplate);
-  let successMessage = document.querySelector('.success')
-  document.addEventListener('click', () => {
-    if (successMessage) {
-      successMessage.remove();
-    }
-    
-  })
-  document.addEventListener('keydown', (evt) => {
-    if(evt.keyCode === 27) {
-      successMessage.remove();
-    }
-  })
+
+let resetAll = function () {
+  resetFilters();
+  resetMarkers();
+  resetMap();
+
 }
 
-let clearForm = function () {
-  let address = document.querySelector('#address');
-  let offerTitle = document.querySelector('#title');
-  minPrice.value = ''
-  address.value = ''
-  offerTitle.value = ''
+
+let clearForm = function (cards) {
+  minPrice.placeholder = 'Введите желаемую сумму'
+  minPrice.removeAttribute('value');
+  resetAll();
+  createFiltredPin(cards);
 }
 
-let adForm = document.querySelector('.ad-form');
-const sendAdForm = (onSuccess) => {
-  adForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const formData = new FormData(evt.target);
-    fetch(
-      'https://22.javascript.pages.academy/keksobooking ',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    ).then((response) => {
-      if (response.ok) {
-        onSuccess();
-        clearForm();
-      } else {
-        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-      }
-    })
-      .catch(() => {
-        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-      });
-  })
-}
-sendAdForm(showSuccessMessage);
+
+
+export { clearForm }

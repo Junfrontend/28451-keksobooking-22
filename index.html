@@ -27,26 +27,26 @@
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
         <form action="#" class="map__filters" autocomplete="off">
-          <select name="housing-type" id="housing-type" class="map__filter">
+          <select name="housing-type" id="housing-type" class="map__filter map__filter-type">
             <option value="any" selected>Любой тип жилья</option>
             <option value="palace">Дворец</option>
             <option value="flat">Квартира</option>
             <option value="house">Дом</option>
             <option value="bungalow">Бунгало</option>
           </select>
-          <select name="housing-price" id="housing-price" class="map__filter">
+          <select name="housing-price" id="housing-price" class="map__filter map__filter-price">
             <option value="any" selected>Любая</option>
             <option value="middle">10000 - 50000&#x20bd;</option>
             <option value="low">до 10000&#x20bd;</option>
             <option value="high">от 50000&#x20bd;</option>
           </select>
-          <select name="housing-rooms" id="housing-rooms" class="map__filter">
+          <select name="housing-rooms" id="housing-rooms" class="map__filter map__filter-rooms">
             <option value="any" selected>Любое число комнат</option>
             <option value="1">Одна комната</option>
             <option value="2">Две комнаты</option>
             <option value="3">Три комнаты</option>
           </select>
-          <select name="housing-guests" id="housing-guests" class="map__filter">
+          <select name="housing-guests" id="housing-guests" class="map__filter map__filter-guests">
             <option value="any" selected>Любое число гостей</option>
             <option value="2">Два гостя</option>
             <option value="1">Один гость</option>
@@ -93,7 +93,7 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide" >
           <label class="ad-form__label" for="address" >Адрес (координаты)</label>
-          <input id="address" name="address" type="text" autocomplete ="off" readonly>
+          <input id="address" name="address" type="text" autocomplete ="off"  readonly>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
@@ -201,13 +201,7 @@
       <h4 class="popup__type">Квартира</h4>
       <p class="popup__text popup__text--capacity">2 комнаты для 3 гостей</p>
       <p class="popup__text popup__text--time">Заезд после 14:00, выезд до 10:00</p>
-      <ul class="popup__features">
-        <li class="popup__feature popup__feature--wifi"></li>
-        <li class="popup__feature popup__feature--dishwasher"></li>
-        <li class="popup__feature popup__feature--parking"></li>
-        <li class="popup__feature popup__feature--washer"></li>
-        <li class="popup__feature popup__feature--elevator"></li>
-        <li class="popup__feature popup__feature--conditioner"></li>
+      <ul class="popup__features">  
       </ul>
       <p class="popup__description">Великолепная квартира-студия в центре Токио. Подходит как туристам, так и бизнесменам. Квартира полностью укомплектована и недавно отремонтирована.</p>
       <div class="popup__photos">
