@@ -27,10 +27,10 @@ let washerFeature = document.querySelector('#filter-washer');
 let elevatorFeature = document.querySelector('#filter-elevator');
 let conditionerFeature = document.querySelector('#filter-conditioner');
 
-let typeFilter = function (card) {
+let filterByTtpes = function (card) {
   return type.value === ANY ? true : card.offer.type === type.value;
 };
-let priceFilter = function (card) {
+let filterByPrice = function (card) {
   if (price.value === ANY) {
     return true
   } else if (price.value === LOW_PRICE && card.offer.price <= MIN_PRICE) {
@@ -42,7 +42,7 @@ let priceFilter = function (card) {
     return true
   }
 }
-let roomsFilter = function (card) {
+let filterByRooms = function (card) {
   if (rooms.value === ANY) {
     return true
   } else if (Number(rooms.value) === ONE_ROOM && card.offer.rooms === ONE_ROOM) {
@@ -53,7 +53,7 @@ let roomsFilter = function (card) {
     return true
   }
 }
-let guestsFilter = function (card) {
+let filterByGuests = function (card) {
   if (guests.value === ANY) {
     return true
   } else if (Number(guests.value) === ONE_GUEST && card.offer.guests === ONE_GUEST) {
@@ -64,25 +64,25 @@ let guestsFilter = function (card) {
     return true
   }
 }
-let featuresFilter = function (card, feature) {
+let filterByFeatures = function (card, feature) {
   let featureName = feature.getAttribute('id').replace(FILTER_VALUE, '');
   return feature.checked === false ? true : card.offer.features.includes(featureName);
 };
 
-let getFiltredCards = function (unfiltredCards) {
+let getFilteredCards = function (unfiltredCards) {
   let filtredCards = [];
   for (let i = 0; i < unfiltredCards.length; i++) {
-    featuresFilter(unfiltredCards[i], wifiFeature)
-    if (typeFilter(unfiltredCards[i]) &&
-      priceFilter(unfiltredCards[i]) &&
-      roomsFilter(unfiltredCards[i]) &&
-      guestsFilter(unfiltredCards[i]) &&
-      featuresFilter(unfiltredCards[i], wifiFeature) &&
-      featuresFilter(unfiltredCards[i], dishwasherFeature) &&
-      featuresFilter(unfiltredCards[i], parkingFeature) &&
-      featuresFilter(unfiltredCards[i], washerFeature) &&
-      featuresFilter(unfiltredCards[i], elevatorFeature) &&
-      featuresFilter(unfiltredCards[i], conditionerFeature)) {
+    filterByFeatures(unfiltredCards[i], wifiFeature)
+    if (filterByTtpes(unfiltredCards[i]) &&
+      filterByPrice(unfiltredCards[i]) &&
+      filterByRooms(unfiltredCards[i]) &&
+      filterByGuests(unfiltredCards[i]) &&
+      filterByFeatures(unfiltredCards[i], wifiFeature) &&
+      filterByFeatures(unfiltredCards[i], dishwasherFeature) &&
+      filterByFeatures(unfiltredCards[i], parkingFeature) &&
+      filterByFeatures(unfiltredCards[i], washerFeature) &&
+      filterByFeatures(unfiltredCards[i], elevatorFeature) &&
+      filterByFeatures(unfiltredCards[i], conditionerFeature)) {
       filtredCards.push(unfiltredCards[i]);
     }
     if (filtredCards.length >= MAX_CARD_COUNT) {
@@ -99,4 +99,4 @@ let applyFilters = function (doThisFunction) {
 let resetFilters = function () {
   mapFilters.reset()
 }
-export { getFiltredCards, resetFilters, applyFilters }
+export { getFilteredCards, resetFilters, applyFilters }

@@ -2,32 +2,34 @@ import { resetFilters } from './filter.js'
 import { resetMarkers, createFiltredPin, resetMap } from './map.js'
 let type = document.getElementById('type');
 let minPrice = document.getElementById('price');
+const MIN_FLAT_PRICE = 1000;
+const MIN_HOUSE_PRICE = 5000;
+const MIN_PALACE_PRICE = 10000;
+const MIN_BUNGALOW_PRICE = 0;
 
 let changePrice = function () {
   let selectedType = type.options[type.selectedIndex].text;
   switch (selectedType) {
     case 'Дворец':
-      minPrice.placeholder = 10000;
+      minPrice.placeholder = MIN_PALACE_PRICE;
       minPrice.setAttribute('value', minPrice.placeholder);
       break;
     case 'Квартира':
-      minPrice.placeholder = 1000;
+      minPrice.placeholder = MIN_FLAT_PRICE;
       minPrice.setAttribute('value', minPrice.placeholder);
       break;
     case 'Дом':
-      minPrice.placeholder = 5000;
+      minPrice.placeholder = MIN_HOUSE_PRICE;
       minPrice.setAttribute('value', minPrice.placeholder);
       break;
     case 'Бунгало':
-      minPrice.placeholder = 0;
+      minPrice.placeholder = MIN_BUNGALOW_PRICE;
       minPrice.setAttribute('value', minPrice.placeholder);
       break;
   }
 }
 
-
 type.onchange = changePrice;
-
 
 let checkInInputElement = document.getElementById('timein');
 let checkOutInputElement = document.getElementById('timeout');
@@ -69,7 +71,6 @@ roomCount.addEventListener('change', function () {
   }
 });
 
-
 let resetAll = function () {
   resetFilters();
   resetMarkers();
@@ -77,14 +78,11 @@ let resetAll = function () {
 
 }
 
-
 let clearForm = function (cards) {
   minPrice.placeholder = 'Введите желаемую сумму'
   minPrice.removeAttribute('value');
   resetAll();
   createFiltredPin(cards);
 }
-
-
 
 export { clearForm }
