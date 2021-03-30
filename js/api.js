@@ -1,7 +1,9 @@
-import {showErrorMessage} from './util.js'
+import { showErrorMessage, showAlert, showSuccessMessage } from './util.js'
+import { clearForm } from './form.js'
 const GETURL = 'https://22.javascript.pages.academy/keksobooking/data';
 const POSTURL = 'https://22.javascript.pages.academy/keksobooking';
 
+let adForm = document.querySelector('.ad-form');
 
 let getData = function (doThisOnSuccsess) {
   fetch(GETURL)
@@ -10,27 +12,35 @@ let getData = function (doThisOnSuccsess) {
     .catch(() => showErrorMessage('Чтото пошло не так, коты ушли покушать и поспать. Потом вернутся. Наверое.'))
 }
 
-let sendData = function (doItOnSuccess, doItOnFail) {
+
+let sendData = function (doItOnSuccess, doItOnFail, formData) {
   fetch(POSTURL,
     {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data;',
-      },
+      body: formData,
     },
   )
-    .then((response) => {
+    .then(function (response) {
       if (response.ok) {
         doItOnSuccess();
       } else {
         doItOnFail(`Не удалось отправить форму. Попробуйте ещё раз. Код ошибки: ${response.status} ${response.statusText}.`);
       }
     })
-    .catch(() => {
+    .catch(function () {
       doItOnFail('Не удалось отправить форму. Попробуйте ещё раз');
     })
-};
+}
 
-export { getData, sendData }
+let sendAdForm = function (cards) {
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    let formData = new FormData(evt.target);
+    sendData(showSuccessMessage, showAlert, formData);
+    clearForm(cards);
+    adForm.reset()
+  });
+};
+export { getData, sendAdForm }
 
 

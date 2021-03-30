@@ -1,7 +1,7 @@
 const createPhotoArray = function (boxForPhoto, arrayOFPhotos) {
   boxForPhoto.innerHTML = ''
   const newPhotos = document.createDocumentFragment();
-  arrayOFPhotos.forEach((value) => {
+  arrayOFPhotos.forEach(function (value) {
     const newPhoto = document.createElement('img');
     newPhoto.classList.add('popup__photo');
     newPhoto.src = value;
@@ -19,7 +19,7 @@ let getNewFeatures = function (features, card) {
   } else {
     featuresList.classList.add('hidden');
   }
-  features.forEach((feature) => {
+  features.forEach(function (feature) {
     let newFeature = document.createElement('li');
     let featureUniqueClass = 'popup__feature--' + feature;
     newFeature.classList.add('popup__feature', featureUniqueClass);

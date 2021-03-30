@@ -1,6 +1,6 @@
 /* global L:readonly */
-import { createCard } from './create-card.js'
-import { getFiltredCards } from './filter.js'
+import {createCard} from './create-card.js'
+import {getFiltredCards} from './filter.js'
 const LATITUDE_OF_CENTER_TOKYO = 35.67000;
 const LONGITUDE_OF_CENTER_TOKYO = 139.76000;
 
@@ -14,7 +14,7 @@ const commonPin = L.icon({
 let addressField = document.querySelector('#address');
 
 let fillAddressField = function (x, y) {
-  addressField.value = x + ' ' + y;
+  addressField.setAttribute('value', x + ' ' + y);
 }
 
 let disableAdForm = function () {
@@ -56,10 +56,10 @@ let disableMapFilters = function () {
 
 let arrOfPins = []; // Хранилище для пинов
 let renderingPin = function (filteredPin) { // Функция отрисовщик пинов на карте
-  arrOfPins.forEach((marker) => {
+  arrOfPins.forEach(function (marker) {
     map.removeLayer(marker);
   })
-  filteredPin.forEach((card) => {
+  filteredPin.forEach(function (card) {
     let markers = L.marker(
       {
         lat: card.location.lat,
@@ -75,7 +75,7 @@ let renderingPin = function (filteredPin) { // Функция отрисовщи
 }
 
 let loadMap = function () {
-  map.on('load', () => {
+  map.on('load', function () {
     disableMapFilters();
     disableAdForm();
   })
@@ -88,13 +88,13 @@ let loadMap = function () {
     },
   ).addTo(map);
 }
-fillAddressField(LATITUDE_OF_CENTER_TOKYO, LONGITUDE_OF_CENTER_TOKYO);
+fillAddressField(LATITUDE_OF_CENTER_TOKYO.toFixed(5), LONGITUDE_OF_CENTER_TOKYO.toFixed(5));
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
-const marker = L.marker(
+let marker = L.marker(
   {
     lat: LATITUDE_OF_CENTER_TOKYO,
     lng: LONGITUDE_OF_CENTER_TOKYO,
@@ -105,13 +105,17 @@ const marker = L.marker(
   },
 );
 marker.addTo(map);
-marker.on('moveend', (evt) => {
+marker.on('moveend', function (evt) {
   fillAddressField(evt.target.getLatLng().lat.toFixed(5), evt.target.getLatLng().lng.toFixed(5));
 });
 
-const markers = L.layerGroup().addTo(map);
-const resetMarkers = () => {
+let markers = L.layerGroup().addTo(map);
+let resetMarkers = function () {
   markers.clearLayers();
+};
+let resetMap = function() {
+  marker.setLatLng([LATITUDE_OF_CENTER_TOKYO, LONGITUDE_OF_CENTER_TOKYO]).update();
+  fillAddressField(LATITUDE_OF_CENTER_TOKYO.toFixed(5), LONGITUDE_OF_CENTER_TOKYO.toFixed(5));
 };
 
 let createFiltredPin = function (unfiltredCards) {
@@ -122,5 +126,5 @@ let createFiltredPin = function (unfiltredCards) {
 
 export {
   renderingPin, createFiltredPin, resetMarkers, loadMap, disableMapFilters,
-  disableAdForm
+  disableAdForm, fillAddressField, resetMap
 }

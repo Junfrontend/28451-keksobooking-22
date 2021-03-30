@@ -1,6 +1,6 @@
 const ALERT_SHOW_TIME = 5000;
 
-let showAlert = (message) => {
+let showAlert = function (message) {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '10000';
   alertContainer.style.position = 'fixed';
@@ -25,7 +25,7 @@ let showErrorMessage = function () {
   }
 }
 
-let debounce = (cb, timeout) => {
+let debounce = function (cb, timeout) {
   let timer;
   return () => {
     if (timer) {
@@ -35,4 +35,21 @@ let debounce = (cb, timeout) => {
   }
 };
 
-export { showAlert, showErrorMessage, debounce };
+let showSuccessMessage = function () {
+  let successMessageTemplate = document.getElementById('success').content;
+  let mainContent = document.querySelector('main');
+  mainContent.appendChild(successMessageTemplate);
+  let successMessage = document.querySelector('.success')
+  document.addEventListener('click', function () {
+    if (successMessage) {
+      successMessage.remove();
+    }
+  })
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      successMessage.remove();
+    }
+  })
+}
+
+export { showAlert, showErrorMessage, debounce, showSuccessMessage };

@@ -1,11 +1,8 @@
-import {sendData} from './api.js';
-import {showAlert} from './util.js'
-import {resetFilters} from './filter.js'
-import {resetMarkers, createFiltredPin} from './map.js'
+import { resetFilters } from './filter.js'
+import { resetMarkers, createFiltredPin, resetMap } from './map.js'
 let type = document.getElementById('type');
 let resetButon = document.querySelector('.ad-form__reset');
 let minPrice = document.getElementById('price');
-
 
 let changePrice = function () {
   let selectedType = type.options[type.selectedIndex].text;
@@ -28,7 +25,7 @@ let changePrice = function () {
       break;
   }
 }
-let adForm = document.querySelector('.ad-form');
+
 
 type.onchange = changePrice;
 
@@ -73,48 +70,22 @@ roomCount.addEventListener('change', function () {
   }
 });
 
-let showSuccessMessage = function () {
-  let successMessageTemplate = document.getElementById('success').content;
-  let mainContent = document.querySelector('main');
-  mainContent.appendChild(successMessageTemplate);
-  let successMessage = document.querySelector('.success')
-  document.addEventListener('click', () => {
-    if (successMessage) {
-      successMessage.remove();
-    }
-
-  })
-  document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
-      successMessage.remove();
-    }
-  })
-}
-
 
 let resetAll = function (cards) {
-  clearForm();
   resetFilters();
   resetMarkers();
   createFiltredPin(cards);
 }
 
+
 let clearForm = function (cards) {
-  resetButon.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    resetAll(cards);
-  })
+  resetAll(cards);
+  minPrice.placeholder = 'Введите желаемую сумму'
+  minPrice.removeAttribute('value');
+  resetMap();
+  //type.value = type.selectedIndex
 }
-let sendAdForm = (onSuccess) => {
-  adForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    sendData(() => {
-      showSuccessMessage();
-      resetAll(onSuccess);
-    },
-    () => showAlert('Извините, ошибка связи с сервером. Наши коты уже чинят'),
-    new FormData(evt.target),
-    );
-  });
-};
-export {sendAdForm, clearForm}
+resetButon.addEventListener('click', clearForm); 
+
+
+export {clearForm}
