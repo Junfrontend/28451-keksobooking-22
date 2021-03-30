@@ -1,6 +1,6 @@
 /* global L:readonly */
-import {createCard} from './create-card.js'
-import {getFiltredCards} from './filter.js'
+import { createCard } from './create-card.js'
+import { getFiltredCards } from './filter.js'
 const LATITUDE_OF_CENTER_TOKYO = 35.67000;
 const LONGITUDE_OF_CENTER_TOKYO = 139.76000;
 
@@ -113,13 +113,12 @@ let markers = L.layerGroup().addTo(map);
 let resetMarkers = function () {
   markers.clearLayers();
 };
-let resetMap = function() {
+let resetMap = function () {
   marker.setLatLng([LATITUDE_OF_CENTER_TOKYO, LONGITUDE_OF_CENTER_TOKYO]).update();
   fillAddressField(LATITUDE_OF_CENTER_TOKYO.toFixed(5), LONGITUDE_OF_CENTER_TOKYO.toFixed(5));
 };
 
 let createFiltredPin = function (unfiltredCards) {
-
   let unfiltredPin = getFiltredCards(unfiltredCards);
   renderingPin(unfiltredPin);
 }

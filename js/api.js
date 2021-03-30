@@ -1,4 +1,4 @@
-import { showErrorMessage, showAlert, showSuccessMessage } from './util.js'
+import { showErrorMessage, showSuccessMessage } from './util.js'
 import { clearForm } from './form.js'
 const GETURL = 'https://22.javascript.pages.academy/keksobooking/data';
 const POSTURL = 'https://22.javascript.pages.academy/keksobooking';
@@ -32,11 +32,11 @@ let sendData = function (doItOnSuccess, doItOnFail, formData) {
     })
 }
 
-let sendAdForm = function (cards) {
+let sendAdForm = function (cards, alert) {
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     let formData = new FormData(evt.target);
-    sendData(showSuccessMessage, showAlert, formData);
+    sendData(showSuccessMessage, alert, formData);
     clearForm(cards);
     adForm.reset()
   });

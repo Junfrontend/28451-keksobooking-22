@@ -1,7 +1,6 @@
 import { resetFilters } from './filter.js'
 import { resetMarkers, createFiltredPin, resetMap } from './map.js'
 let type = document.getElementById('type');
-let resetButon = document.querySelector('.ad-form__reset');
 let minPrice = document.getElementById('price');
 
 let changePrice = function () {
@@ -71,21 +70,21 @@ roomCount.addEventListener('change', function () {
 });
 
 
-let resetAll = function (cards) {
+let resetAll = function () {
   resetFilters();
   resetMarkers();
-  createFiltredPin(cards);
+  resetMap();
+
 }
 
 
 let clearForm = function (cards) {
-  resetAll(cards);
   minPrice.placeholder = 'Введите желаемую сумму'
   minPrice.removeAttribute('value');
-  resetMap();
-  //type.value = type.selectedIndex
+  resetAll();
+  createFiltredPin(cards);
 }
-resetButon.addEventListener('click', clearForm); 
 
 
-export {clearForm}
+
+export { clearForm }
